@@ -13,18 +13,18 @@ class ConexaoBanco extends PDO {
 	}
 
 	//Setar vários parâmetros
-	private function setParams($statment, $parameters = array()){
+	private function setParams($statement, $parameters = array()){
 
 		foreach ($parameters as $key => $value){
-			$statment->bindParam($key, $value);
+			$this->setParam($statement, $key, $value);
 		}
 
 	}
 
 	//Setar um parâmetro
-	private function setParam($statment, $key, $value){
+	private function setParam($statement, $key, $value){
 
-		$statment->bindParam($key, $value);
+		$statement->bindParam($key, $value);
 	}
 
 	public function query($rawQuery, $params = array()){
