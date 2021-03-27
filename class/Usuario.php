@@ -40,7 +40,7 @@ class Usuario {
 		$this->dtcadastro = $value;
 	}
 
-	//Método, id é a chave primária
+	//Método para carregar o banco, id é a chave primária (SELECT)
 	public function loadById($id){
 
 		$sql = new ConexaoBanco();
@@ -55,6 +55,7 @@ class Usuario {
 		}
 
 	}
+
 	//Diferente do SELECT, o LIST vai trazer todos os usuários
 	//Método para listar todos os usuários
 	public static function getList(){
@@ -65,7 +66,7 @@ class Usuario {
 
 	}
 
-	//Método para buscar um usuário específico pelo LOGIN
+	//Método para buscar um usuário específico pelo LOGIN (LIST)
 	public static function search($login){
 
 		$sql = new ConexaoBanco();
@@ -75,7 +76,7 @@ class Usuario {
 		));
 	}
 
-	//Método para buscar um usuário específico pelo LOGIN e SENHA
+	//Método para buscar um usuário específico pelo LOGIN e SENHA (LIST)
 	public function login($login, $password){
 
 		$sql = new ConexaoBanco();
@@ -103,12 +104,12 @@ class Usuario {
 		$this->setDtcadastro(new DateTime($dados['dtcadastro']));
 
 	}
-
-	//Inserir usuários ao banco com o id através do stored procedures
+	//Inserir usuários ao banco através do stored procedures (INSERT)
+	//Inseriu login e senha, id e data são automáticos
 	public function insert(){
 
 		$sql = new ConexaoBanco();
-
+		//Ao invés da query, usou-se a procedure (preicsou inserir no BANCO SQL)
 		$results = $sql->select("CALL sp_usuarios_insert(:LOGIN, :PASSWORD)", array(
 			':LOGIN'=>$this->getDeslogin(),
 			':PASSWORD'=>$this->getDessenha()
@@ -120,6 +121,24 @@ class Usuario {
 
 	}
 
+	//Atualizar usuários do banco colocando login e senha novas
+	public function update($login, $password){//Os parâmetros servem pra dizer sobre 'o que eu quero alterar'...
+
+		//Definindo as variáveis dos parâmetros
+		$this->setDeslogin($login);
+		$this->setDessenha($password);
+
+		$sql = new ConexaoBanco();
+		//Agora é um query, não uma procedure
+		$sql->query("UPDATE tb_usuarios SET deslogin = :LOGIN, dessenha= :PASSWORD WHERE idusuario = :ID", array(
+			':LOGIN'=>$this->getDeslogin(),
+			':PASSWORD'=>$this->getDessenha(),
+			':ID'=>$this->getIdusuario()
+		));
+
+	}
+
+	//FAZ PARTE DO SELECT
 	public function __toString(){
 
 		return json_encode(array(

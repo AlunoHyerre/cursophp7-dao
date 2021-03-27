@@ -27,12 +27,19 @@ echo json_encode($usuarios);
 //$usuario->login("user","user123");
 //echo $usuario;
 
-$aluno = new Usuario();
-$aluno->setDeslogin("aluno");
-$aluno->setDessenha("@lun0");
+//Insere usuário na tabela, criando novo usuário, inserindo o login e a senha
+//$aluno = new Usuario();
+//$aluno->setDeslogin("aluno");
+//$aluno->setDessenha("@lun0");
+//$aluno->insert();
+//echo $aluno;
 
-$aluno->insert();
+//Atualiza/modifica os dados de um usuário da tabela, por meio do login e senha
+$usuario = new Usuario();
+$usuario->loadById(5);
+$usuario->update("professor","Pr0f123");
+echo $usuario;
 
-echo $aluno;
+
 
 ?>
