@@ -23,8 +23,16 @@ echo json_encode($usuarios);
 //echo json_encode($search);
 
 //Traz uma lista com usuários buscando pelo login e senha
-$usuario = new Usuario();
-$usuario->login("user","user123");
-echo $usuario;
+//$usuario = new Usuario();
+//$usuario->login("user","user123");
+//echo $usuario;
+
+$aluno = new Usuario();
+$aluno->setDeslogin("aluno");
+$aluno->setDessenha("@lun0");
+
+$aluno->insert();
+
+echo $aluno;
 
 ?>
