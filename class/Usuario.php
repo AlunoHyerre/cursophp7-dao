@@ -138,6 +138,21 @@ class Usuario {
 
 	}
 
+	//Exclui usuários do banco por meio do id
+	public function delete(){
+
+		$sql = new ConexaoBanco();
+		//Faz pela query tbm
+		$sql->query("DELETE FROM tb_usuarios WHERE idusuario = :ID", array(
+			':ID'=>$this->getIdusuario()
+		));
+
+		$this->setIdusuario(0);
+		$this->setDeslogin("");
+		$this->setDessenha("");
+		$this->setDtcadastro(new DateTime());
+	}
+
 	//FAZ PARTE DO SELECT
 	public function __toString(){
 

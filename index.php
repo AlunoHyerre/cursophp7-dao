@@ -35,11 +35,16 @@ echo json_encode($usuarios);
 //echo $aluno;
 
 //Atualiza/modifica os dados de um usuário da tabela, por meio do login e senha
+//$usuario = new Usuario();
+//$usuario->loadById(5);
+//$usuario->update("professor","Pr0f123");
+//echo $usuario;
+
+//Excluir um usuário pelo id
+//Deletou o registro de ID=3
 $usuario = new Usuario();
-$usuario->loadById(5);
-$usuario->update("professor","Pr0f123");
+$usuario->loadById(3);
+$usuario->delete();
 echo $usuario;
-
-
 
 ?>
